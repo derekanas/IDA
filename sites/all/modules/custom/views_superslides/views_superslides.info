@@ -1,0 +1,7 @@
+name = Views Superslides
+description = Provides a Views Plugin for the Superslides jQuery plugin
+package = Views
+core = 7.x
+dependencies[] = views
+dependencies[] = libraries
+files[] = includes/views_superslides_style_plugin.inc

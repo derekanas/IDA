@@ -1,0 +1,20 @@
+<?php 
+
+/*
+* Implements hook_menu().
+*/
+function mysettings_menu() {
+  $items = array();
+  $items['admin/mysettings'] = array(
+    'title' => 'Guidelines',
+    'position' => 'left',
+    'weight' => -100,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mysettings_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'mysettings.admin.inc',
+  );
+
+  return $items;
+}

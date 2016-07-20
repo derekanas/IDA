@@ -1,0 +1,5 @@
+core = 7.x
+description = My Settings Module
+name = My Settings Module
+package = Custom
+version = 7.x-1.0

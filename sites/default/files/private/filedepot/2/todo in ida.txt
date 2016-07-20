@@ -1,0 +1,12 @@
+remove the number change to 3 pictures
+pagination 
+name is "highlights"
+
+
+2. event date on homepage needs to display
+
+3. photoalbum 4 columns
+
+
+
+rtnq changes - 

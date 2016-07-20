@@ -1,0 +1,29 @@
+@font-face {
+	font-family: 'palatino';
+	src:url('pala.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'palatino-bold';
+	src:url('palab.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'palatino-bold-italic';
+	src:url('palabi.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'palatino-italic';
+	src:url('palai.ttf');
+	font-weight: normal;
+	font-style: normal;
+}

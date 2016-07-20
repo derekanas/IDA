@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * @file
+ * The Main module file.
+ *
+ * Includes Views and Library delcarations and calls to template preprocess function.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function views_superslides_views_api() {
+  return array(
+    'api' => 3.0,
+    'path' => drupal_get_path('module', 'views_superslides') . '/includes',
+  );
+}
+
+/**
+ * Implements hook_library().
+ */
+function views_superslides_library() {
+
+  $path = libraries_get_path('superslides');
+  $items = array();
+
+  $items['superslides'] = array(
+    'name' => 'jQuery Superslides)',
+    'vendor url' => 'https://github.com/nicinabox/superslides',
+    'download url' => 'https://github.com/nicinabox/superslides',
+    'title' => t('jQuery Superslides'),
+    'version' => array(),
+    'js' => array(
+      $path . '/jquery.superslides.min.js' => array(),
+    ),
+    'css' => array(
+      $path . '/stylesheets/superslides.css' => array(),
+    ),
+  );
+
+  return $items;
+}
+
+/**
+ * Sanitize the node_title for use in preprocess vars.
+ *
+ * @param string $string, $replacement
+ *
+ */
+function drupal_system_string($string, $replacement = '_') {
+  return preg_replace('/[^a-z0-9]+/', $replacement, strtolower($string));
+}
+
+/**
+ * Template function for views_superslides
+ *
+ * @param array $vars
+ *  Array of template variables.
+ */
+function template_preprocess_views_view_superslides(&$vars) {
+  $view = $vars['view'];
+  $options = $view->style_plugin->options;
+  $vars['views_superslides_id'] = 'views_superslides_' . $view->name . '_' . $view->current_display;
+
+  $vars['use_title'] = $options['use_title_as_id'];
+  if ($options['use_title_as_id'] == TRUE) {
+    foreach ($view->result as $result) {
+      $title = $result->node_title;
+      $titles[]= drupal_system_string($title);
+    }
+    $vars['titles'] = $titles;
+  }
+
+  drupal_add_library('views_superslides', 'superslides');
+  drupal_add_js(drupal_get_path('module', 'views_superslides') . '/js/initialize.js');
+  drupal_add_js(array(
+    'viewsSuperslides' => array(
+      $vars['views_superslides_id'] => array(
+        'animation' => $options['animation'],
+        'inherit_width_from' => $options['inherit_width_from'],
+        'inherit_height_from' => $options['inherit_height_from'],
+        'hashchange' => $options['hashchange'],
+      ),
+    ),
+  ), 'setting');
+}
+
+function template_preprocess_views_view_field_superslides(&$vars) {
+  $vars['output'] = $vars['field']->advanced_render($vars['row']);
+}
+
+/**
+ * Only returns true the first time it's called for an id
+ *
+ * @param $id
+ *  A uniqe view id.
+ *
+ * @return bool
+ *  TRUE for the first time called for a given $id
+ *  FALSE for each time after that
+ */
+function theme_views_superslides_display_item($id) {
+  $display = &drupal_static(__FUNCTION__);
+
+  return $display[$id] = !isset($display[$id]) ? FALSE : TRUE;
+}
+
